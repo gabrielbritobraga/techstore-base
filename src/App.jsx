@@ -31,14 +31,16 @@ export default function App() {
   }, [])
 
   function adicionarAoCarrinho(produto) {
-    setCarrinho(carrinho.concat(produto))
+    if (!produto || produto.estoque === 0) return
+
+    setCarrinho((carrinhoAtual) => carrinhoAtual.concat(produto))
   }
 
   function removerUmaUnidade(produtoId) {
     // Remove só a primeira unidade encontrada do produto
     let removido = false
-    setCarrinho(
-      carrinho.filter((produto) => {
+    setCarrinho((carrinhoAtual) =>
+      carrinhoAtual.filter((produto) => {
         if (!removido && produto.id === produtoId) {
           removido = true
           return false
@@ -46,6 +48,10 @@ export default function App() {
         return true
       })
     )
+  }
+
+  function removerProduto(produtoId) {
+    setCarrinho((carrinhoAtual) => carrinhoAtual.filter((produto) => produto.id !== produtoId))
   }
 
   const clienteAtual = clientes.find((cliente) => cliente.id === clienteAtualId)
@@ -78,6 +84,7 @@ export default function App() {
                   clienteAtual={clienteAtual}
                   onAdicionar={adicionarAoCarrinho}
                   onRemover={removerUmaUnidade}
+                  onRemoverTodos={removerProduto}
                 />
               }
             />
