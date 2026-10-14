@@ -1,3 +1,5 @@
+import { Link } from 'react-router'
+
 // Página usada pelo time de estoque para acompanhar a quantidade de cada produto
 export default function Estoque({ produtos }) {
   // slice cria uma cópia, para o sort não alterar a lista original
@@ -17,12 +19,17 @@ export default function Estoque({ produtos }) {
               <th>Categoria</th>
               <th>Unidades</th>
               <th>Situação</th>
+              <th>Link</th>
             </tr>
           </thead>
           <tbody>
             {ordenados.map((produto) => (
               <tr key={produto.id}>
-                <td>{produto.title}</td>
+                <td>
+                  <Link to={`/produto/${produto.id}`} className="link-produto">
+                    {produto.title}
+                  </Link>
+                </td>
                 <td>{produto.category}</td>
                 <td>{produto.estoque}</td>
                 <td>
@@ -31,6 +38,11 @@ export default function Estoque({ produtos }) {
                     <span className="selo selo-alerta">Repor</span>
                   )}
                   {produto.estoque >= 5 && <span className="selo selo-ok">OK</span>}
+                </td>
+                <td>
+                  <Link to={`/produto/${produto.id}`} className="botao botao-pequeno botao-secundario">
+                    Abrir produto
+                  </Link>
                 </td>
               </tr>
             ))}
