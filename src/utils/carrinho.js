@@ -1,8 +1,13 @@
 // O carrinho guarda uma entrada por unidade adicionada.
 // Ex.: duas camisetas iguais = o mesmo produto duas vezes no array.
 
+function valorNumerico(produto) {
+  const valor = Number(produto?.price ?? 0)
+  return Number.isFinite(valor) ? valor : 0
+}
+
 export function calcularTotal(carrinho) {
-  return carrinho.reduce((total, produto) => total + produto.price, 0)
+  return carrinho.reduce((total, produto) => total + valorNumerico(produto), 0)
 }
 
 export function agruparItens(carrinho) {
