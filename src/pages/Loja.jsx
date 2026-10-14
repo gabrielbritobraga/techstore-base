@@ -14,10 +14,12 @@ export default function Loja({ produtos, onAdicionar }) {
   const [produtosVisiveis, setProdutosVisiveis] = useState(produtos)
 
   useEffect(() => {
+    const produtosDisponiveis = produtos.filter((produto) => produto.estoque > 0)
+
     if (categoria === 'todas') {
-      setProdutosVisiveis(produtos)
+      setProdutosVisiveis(produtosDisponiveis)
     } else {
-      setProdutosVisiveis(produtos.filter((produto) => produto.category === categoria))
+      setProdutosVisiveis(produtosDisponiveis.filter((produto) => produto.category === categoria))
     }
   }, [categoria, produtos])
 
